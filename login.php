@@ -1,32 +1,46 @@
 <?php
 session_start();
-include '../connection.php';
+include '../db_connect.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $email = $_POST['email'];
-    $password = $_POST['password'];
+    $email_or_cin = trim($_POST['username']); 
+    $pass = trim($_POST['password']);
 
-    $stmt = $conn->prepare("SELECT cin, name, password FROM students WHERE email = ?");
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $result = $stmt->get_result();
+    if ($stmt = $conn->prepare("SELECT id, role, status, filiere, password FROM users WHERE email = ? OR cin = ?")) {
+        $stmt->bind_param("ss", $email_or_cin, $email_or_cin);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
-    if ($result->num_rows === 1) {
-        $row = $result->fetch_assoc();
-        if (password_verify($password, $row['password'])) {
-            $_SESSION['student_cin'] = $row['cin'];
-            $_SESSION['student_name'] = $row['name'];
-            header("Location: dashboard.php");
-            exit();
+        if ($row = $result->fetch_assoc()) {
+            // Store user session data
+            $_SESSION['user_id'] = $row['id'];
+            $_SESSION['role'] = $row['role'];
+            $_SESSION['status'] = $row['status'];
+            $_SESSION['filliere'] = $row['filliere'];
+
+            // Check password (assuming plain-text; use password_hash in production)
+            if ($row['password'] === NULL || $row['password'] === '' || $pass === $row['password']) {
+                // Redirect based on user role
+                $redirects = [
+                    'student' => 'profile.php',
+                    'departement' => '../admin/departement_degats.php',
+                    'internat' => '../admin/internatGarcons.php',
+                    'economique' => '../admin/serviceEconomique.php',
+                    'administration' => '../admin/index.php',
+                    'restaurant' => '../admin/restaurant.php',
+                    'super_admin' => '../index.php',
+                    'admin' => '../index.php'
+                ];
+                header("Location: " . ($redirects[$row['role']] ?? 'profile.php'));
+                exit();
+            } else {
+                $error = "Mot de passe incorrect!";
+            }
         } else {
-            $error = "Invalid password.";
+            $error = "Email ou CIN incorrect!";
         }
-    } else {
-        $error = "No student found with this email.";
+        $stmt->close();
     }
-
-    $stmt->close();
-    $conn->close();
 }
 ?>
 
