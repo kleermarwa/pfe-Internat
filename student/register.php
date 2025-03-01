@@ -37,8 +37,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
-
     <link rel="stylesheet" href="register.css">
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
@@ -51,25 +49,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <h2>Register</h2>
         <?php if(isset($error)) echo "<p style='color:red;'>$error</p>"; ?>
         <form action="register.php" method="POST">
-            <div class="username">
-                <label for="cin">CIN</label>
-                <div class="input-container">
-                    <ion-icon name="card-outline"></ion-icon>
-                    <input type="text" id="cin" name="cin" placeholder="CIN" required>
+            <div class="form-row">
+                <div class="username">
+                    <label for="cin">CIN</label>
+                    <div class="input-container">
+                        <ion-icon name="card-outline"></ion-icon>
+                        <input type="text" id="cin" name="cin" placeholder="CIN" required>
+                    </div>
+                </div>
+                <div class="username">
+                    <label for="name">Full Name</label>
+                    <div class="input-container">
+                        <ion-icon name="person-outline"></ion-icon>
+                        <input type="text" id="name" name="name" placeholder="Full Name" required>
+                    </div>
                 </div>
             </div>
-            <div class="username">
-                <label for="name">Full Name</label>
-                <div class="input-container">
-                    <ion-icon name="person-outline"></ion-icon>
-                    <input type="text" id="name" name="name" placeholder="Full Name" required>
+            <div class="form-row">
+                <div class="username">
+                    <label for="email">Email</label>
+                    <div class="input-container">
+                        <ion-icon name="mail-outline"></ion-icon>
+                        <input type="email" id="email" name="email" placeholder="Email" required>
+                    </div>
                 </div>
-            </div>
-            <div class="username">
-                <label for="email">Email</label>
-                <div class="input-container">
-                    <ion-icon name="mail-outline"></ion-icon>
-                    <input type="email" id="email" name="email" placeholder="Email" required>
+                <div class="username">
+                    <label for="phone">Phone Number</label>
+                    <div class="input-container">
+                        <ion-icon name="call-outline"></ion-icon>
+                        <input type="text" id="phone" name="phone" placeholder="Phone Number" required>
+                    </div>
                 </div>
             </div>
             <div class="password">
@@ -78,13 +87,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <ion-icon name="lock-closed-outline"></ion-icon>
                     <input type="password" id="password" name="password" placeholder="Password" required>
                     <span class="show-hide" onclick="togglePasswordVisibility()">Show</span>
-                </div>
-            </div>
-            <div class="username">
-                <label for="phone">Phone Number</label>
-                <div class="input-container">
-                    <ion-icon name="call-outline"></ion-icon>
-                    <input type="text" id="phone" name="phone" placeholder="Phone Number" required>
                 </div>
             </div>
             <button type="submit" class="login">Register</button>
