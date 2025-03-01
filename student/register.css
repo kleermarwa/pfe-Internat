@@ -1,0 +1,105 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: url('https://static.vecteezy.com/system/resources/previews/020/040/404/non_2x/multi-layers-blue-color-texture-3d-papercut-layers-in-gradient-banner-abstract-paper-cut-art-background-design-for-website-template-topography-map-concept-or-smooth-origami-paper-cut-vector.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+.login-container {
+    background-color: rgba(25, 167, 228, 0.8);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 320px;
+    text-align: center;
+}
+
+.logo img {
+    width: 150px;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+h2 {
+    color: white;
+    margin-bottom: 20px;
+}
+
+.username, .password, .cin, .name, .email, .phone {
+    background: white;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    border-radius: 12px;
+    color: #4a4a4a;
+    margin-bottom: 15px;
+}
+
+.input-container {
+    display: flex;
+    align-items: center;
+    background: white;
+    padding: 8px;
+    border-radius: 8px;
+    position: relative;
+}
+
+.input-container ion-icon {
+    color: #4a4a4a;
+    margin-right: 10px;
+}
+
+.input-container input {
+    outline: none;
+    border: none;
+    flex: 1;
+    font-size: 16px;
+}
+
+.show-hide {
+    cursor: pointer;
+    font-size: 14px;
+    color: #2c3e50;
+    margin-left: 10px;
+}
+
+.login {
+    padding: 12px;
+    background: #1b6ca8;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.login:hover {
+    background: #155a8a;
+}
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: white;
+    margin-top: 15px;
+}
+
+.footer span, .footer a {
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
