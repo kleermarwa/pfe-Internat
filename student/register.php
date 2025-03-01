@@ -46,7 +46,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="logo">
             <img src="../logo (2).png" alt="logo">
         </div>
-        <h2>Register</h2>
         <?php if(isset($error)) echo "<p style='color:red;'>$error</p>"; ?>
         <form action="register.php" method="POST">
             <div class="form-row">
