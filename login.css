@@ -31,7 +31,7 @@ h2 {
     margin-bottom: 20px;
 }
 
-.username, .password {
+.username, .password, .cin, .name, .email, .phone {
     background: white;
     padding: 10px;
     display: flex;
