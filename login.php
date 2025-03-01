@@ -1,4 +1,17 @@
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $username = isset($_POST['username']) ? $_POST['username'] : '';
+    $password = isset($_POST['password']) ? $_POST['password'] : '';
 
+    // Your authentication logic here
+
+    if (empty($username) || empty($password)) {
+        $error = "Username and password are required.";
+    } else {
+        // Process login
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
