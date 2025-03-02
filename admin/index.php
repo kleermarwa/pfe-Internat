@@ -38,8 +38,8 @@ $total_students = $stmt->get_result();
     </header>
     <div class="sidebar" id="sidebar">
         <div class="profile">
-            <img src="profile.jpg" alt="User Picture" class="profile-picture">
-            <p class="username"><?php echo $_SESSION['username']; ?></p>
+            <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt="Profile Picture" class="profile-picture">
+            <span class="username">User Name</span>
         </div>
         <hr>
         <nav id="nav-bar">

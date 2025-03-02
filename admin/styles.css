@@ -20,6 +20,7 @@ body {
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
 }
 
+
 .sidebar.open {
     width: 200px; /* Full width when open */
 }
@@ -63,12 +64,10 @@ body {
     display: block;
     margin-top: 40px;
 }
-
 .sidebar:not(.open) .profile {
     display: flex; /* Keep it visible */
     align-items: center;
     justify-content: center;
-    flex-direction: column; /* Stack profile picture and username vertically */
 }
 
 .toggle-btn {
@@ -97,8 +96,8 @@ body {
     background: linear-gradient(145deg, #141460, #1e1e6d);
     color: white;
     width: 100%;
-    font-size: 18px;
-    padding: 15px;
+    font-size: 14px;
+    padding: 1px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     position: sticky;
     top: 0;
@@ -198,7 +197,6 @@ td img {
     height: 50px;
     border-radius: 50%;
     margin-bottom: 10px; /* Add margin below the picture */
-    display: block; /* Ensure the profile picture is always displayed */
 }
 
 .username {
@@ -237,18 +235,18 @@ td img {
 .logout-button i {
     font-size: 20px;
     margin-right: 10px;
+    display: flex;
+    align-items: center;
 }
 
-/* Hide text when sidebar is closed */
 .sidebar:not(.open) .logout-button span {
-    display: none; /* Hide text */
+    display: none; 
 }
 
 .sidebar:not(.open) .logout-button {
     justify-content: center;
 }
 
-/* Enhanced search bar */
 .form-group {
     display: flex;
     justify-content: center;
