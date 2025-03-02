@@ -1,53 +1,59 @@
 <?php
-session_start();
-include '../connection.php';
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $email = $_POST['email'];
-    $password = $_POST['password'];
+    $username = isset($_POST['username']) ? $_POST['username'] : '';
+    $password = isset($_POST['password']) ? $_POST['password'] : '';
 
-    $stmt = $conn->prepare("SELECT cin, name, password FROM students WHERE email = ?");
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $result = $stmt->get_result();
+    // Your authentication logic here
 
-    if ($result->num_rows === 1) {
-        $row = $result->fetch_assoc();
-        if (password_verify($password, $row['password'])) {
-            $_SESSION['student_cin'] = $row['cin'];
-            $_SESSION['student_name'] = $row['name'];
-            header("Location: dashboard.php");
-            exit();
-        } else {
-            $error = "Invalid password.";
-        }
+    if (empty($username) || empty($password)) {
+        $error = "Username and password are required.";
     } else {
-        $error = "No student found with this email.";
+        // Process login
     }
-
-    $stmt->close();
-    $conn->close();
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="login.css">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </head>
 <body>
-    <div class="container">
-        <h2>Login</h2>
-        <?php if(isset($error)) echo "<p style='color:red;'>$error</p>"; ?>
-        <form action="login.php" method="POST">
-            <input type="email" name="email" placeholder="Email" required><br>
-            <input type="password" name="password" placeholder="Password" required><br>
-            <button type="submit">Login</button>
+    <div class="login-container">
+        <div class="logo">
+            <img src="logo (2).png" alt="logo">
+        </div>
+        <form method="post" action="">
+            <div class="username">
+                <label for="username">Email / CIN</label>
+                <div class="input-container">
+                    <ion-icon name="person-outline"></ion-icon>
+                    <input type="text" id="username" name="username" placeholder="Email or CIN" required>
+                </div>
+            </div>
+
+            <div class="password">
+                <label for="password">Password</label>
+                <div class="input-container">
+                    <ion-icon name="lock-closed-outline"></ion-icon>
+                    <input type="password" id="password" name="password" placeholder="Password.." required>
+                    <span class="show-hide" onclick="togglePasswordVisibility()">Show</span>
+                </div>
+            </div>
+
+            <?php if (isset($error)) { echo "<p style='color: red;'>$error</p>"; } ?>
+
+            <button type="submit" class="login">Login</button>
         </form>
-        <a href="register.php" class="link">Don't have an account? Register</a>
+        <div class="footer">
+            <span><a href="sign-in.html">Sign up</a></span>
+            <span>Forgot Password?</span>
+        </div>
     </div>
+    <script type="text/javascript" src="login.js"></script>
 </body>
 </html>
