@@ -129,7 +129,7 @@ body {
     border: none;
     cursor: pointer;
     border-radius: 12px;
-    margin-top: 120px;
+    margin-top: 50px;
     transition: background 0.3s, transform 0.3s;
 }
 
@@ -244,4 +244,42 @@ td img {
 
 .sidebar:not(.open) .logout-button {
     justify-content: center;
+}
+
+/* Enhanced search bar */
+.form-group {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.form-control {
+    width: 100%;
+    max-width: 400px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+}
+
+.form-control:focus {
+    border-color: #1950a4cb;
+    outline: none;
+}
+
+.search-btn {
+    padding: 10px 20px;
+    margin-left: 10px;
+    background: #1950a4cb;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s;
+}
+
+.search-btn:hover {
+    background: #1e6db0;
 }

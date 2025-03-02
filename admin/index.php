@@ -56,10 +56,10 @@ $total_students = $stmt->get_result();
     <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
     
     <div class="main-content">
-        <div class="buttons">
+        <!--<div class="buttons">
             <button class="big-button">Internat filles</button>
             <button class="big-button">Internat garçons</button>
-        </div>
+        </div> -->
 
         <!-- Student Search & List Section -->
         <div class="students-table">
@@ -70,6 +70,7 @@ $total_students = $stmt->get_result();
                 <div class="form-group">
                     <input type="text" class="form-control" name="search" placeholder="Search by CIN or Name" 
                            value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>">
+                    <button type="submit" class="search-btn">Search</button>
                 </div>
             </form>
 
