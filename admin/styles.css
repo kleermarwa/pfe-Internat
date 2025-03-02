@@ -20,7 +20,6 @@ body {
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
 }
 
-
 .sidebar.open {
     width: 200px; /* Full width when open */
 }
@@ -64,10 +63,12 @@ body {
     display: block;
     margin-top: 40px;
 }
+
 .sidebar:not(.open) .profile {
     display: flex; /* Keep it visible */
     align-items: center;
     justify-content: center;
+    flex-direction: column; /* Stack profile picture and username vertically */
 }
 
 .toggle-btn {
@@ -197,6 +198,7 @@ td img {
     height: 50px;
     border-radius: 50%;
     margin-bottom: 10px; /* Add margin below the picture */
+    display: block; /* Ensure the profile picture is always displayed */
 }
 
 .username {
