@@ -38,19 +38,19 @@ $total_students = $stmt->get_result();
     </header>
     <div class="sidebar" id="sidebar">
         <div class="profile">
-            <img src="profile.jpg" alt="User Picture" class="profile-picture">
-            <p class="username"><?php echo $_SESSION['username']; ?></p>
+            <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt="Profile Picture" class="profile-picture">
+            <span class="username">User Name</span>
         </div>
         <hr>
         <nav id="nav-bar">
             <div class="sidebar-buttons">
-                <button class="sidebar-button"><i class="fa-solid fa-building"></i><span> Gestion des internats</span></button>
-                <button class="sidebar-button"><i class="fa-solid fa-door-open"></i><span> Gestion des chambres</span></button>
-                <button class="sidebar-button"><i class="fa-solid fa-file"></i><span> Demandes d'internat</span></button>
-                <button class="sidebar-button"><i class="fa-solid fa-face-sad-tear"></i><span> Réclamations</span></button>
+                <a href="#" class="sidebar-button"><i class="fa-solid fa-building"></i><span> Gestion des internats</span></a>
+                <a href="roomslist.php" class="sidebar-button"><i class="fa-solid fa-door-open"></i><span> Gestion des chambres</span></a>
+                <a href="#" class="sidebar-button"><i class="fa-solid fa-file"></i><span> Demandes d'internat</span></a>
+                <a href="#" class="sidebar-button"><i class="fa-solid fa-face-sad-tear"></i><span> Réclamations</span></a>
             </div>
         </nav>
-        <button class="logout-button" onclick="window.location.href='logout.php'"><i class="fa-solid fa-sign-out-alt"></i><span> Logout</span></button>
+        <a href="logout.php" class="logout-button"><i class="fa-solid fa-sign-out-alt"></i><span> Logout</span></a>
     </div>
     
     <button class="toggle-btn" onclick="toggleSidebar()">☰</button>

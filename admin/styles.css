@@ -2,77 +2,60 @@ body {
     margin: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     display: flex;
-    flex-direction: column; /* Allow vertical stacking */
-    min-height: 100vh; /* Ensure the body takes at least the full height of the viewport */
-    overflow-y: auto; /* Enable vertical scrolling */
+    flex-direction: column;
+    min-height: 100vh;
+    overflow-y: auto;
     background: #f0f2f5;
 }
 
 .sidebar {
     position: fixed;
-    width: 60px; /* Default collapsed width */
+    width: 50px;
     height: 100%;
     background: linear-gradient(145deg, #141460, #1e1e6d);
     color: white;
-    transition: width 0.3s ease-in-out;
+    transition: width 0.3s;
     padding: 20px 5px;
-    overflow: visible; /* Change from hidden to visible */
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
 }
 
 .sidebar.open {
-    width: 200px; /* Full width when open */
+    width: 200px;
 }
 
-.sidebar-button {
+.sidebar a {
     display: flex;
     align-items: center;
-    width: 100%;
     padding: 10px;
-    margin-bottom: 17px;
-    background: #1950a4cb;
+    margin: 17px 0;
     color: white;
-    border: none;
     cursor: pointer;
-    border-radius: 5px;
     font-size: 15px;
     white-space: nowrap;
-    transition: width 0.3s, padding 0.3s, justify-content 0.3s, background 0.3s;
+    text-decoration: none;
+    transition: color 0.3s;
 }
 
-.sidebar-button:hover {
-    background: #1e6db0;
+.sidebar a:hover {
+    color: #1e6db0;
 }
 
-.sidebar-button i {
+.sidebar a i {
     font-size: 20px;
-    margin-right: 16px; /* Increased margin */
+    margin-right: 16px;
     transition: margin-right 0.3s;
 }
 
-/* Hide text when sidebar is closed */
-.sidebar:not(.open) .sidebar-button span {
-    display: none; /* Hide text */
+.sidebar:not(.open) a span {
+    display: none;
 }
 
-.sidebar:not(.open) .sidebar-button {
+.sidebar:not(.open) a {
     justify-content: center;
-}
-
-.sidebar-buttons {
-    display: block;
-    margin-top: 40px;
-}
-
-.sidebar:not(.open) .profile {
-    display: flex; /* Keep it visible */
-    align-items: center;
-    justify-content: center;
-    flex-direction: column; /* Stack profile picture and username vertically */
 }
 
 .toggle-btn {
-    position: fixed; /* Change to fixed to ensure visibility */
+    position: fixed;
     left: 10px;
     top: 10px;
     background: #14146050;
@@ -83,7 +66,7 @@ body {
     font-size: 20px;
     border-radius: 5px;
     transition: background 0.3s;
-    z-index: 1001; /* Ensure it stays on top */
+    z-index: 1001;
 }
 
 .toggle-btn:hover {
@@ -97,51 +80,87 @@ body {
     background: linear-gradient(145deg, #141460, #1e1e6d);
     color: white;
     width: 100%;
-    font-size: 18px;
-    padding: 15px;
+    font-size: 14px;
+    padding: 1px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     position: sticky;
     top: 0;
     z-index: 1000;
 }
 
+.profile {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 60px;
+}
+
+.profile-picture {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.username {
+    color: white;
+    font-size: 18px;
+    text-align: center;
+}
+
+.sidebar:not(.open) .username {
+    display: none;
+}
+
+.logout-button {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 10px;
+    color: white;
+    cursor: pointer;
+    font-size: 15px;
+    white-space: nowrap;
+    text-decoration: none;
+    transition: color 0.3s;
+    position: absolute;
+    bottom: 30px;
+    left: 0;
+    justify-content: center;
+}
+
+.logout-button:hover {
+    color: #1e6db0;
+}
+
+.logout-button i {
+    font-size: 20px;
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.sidebar:not(.open) .logout-button span {
+    display: none; 
+}
+
+.sidebar:not(.open) .logout-button {
+    justify-content: center;
+}
+
 .main-content {
     flex-grow: 1;
     display: flex;
-    flex-direction: column; /* Stack elements vertically */
-    align-items: center; /* Keep them centered horizontally */
+    flex-direction: column;
+    align-items: center;
     width: 100%;
-    background: #f0f2f5;
-    padding-top: 80px; /* Add some padding so content doesn't touch the top */
-    overflow-y: auto; /* Enable vertical scrolling */
-}
-
-.buttons {
-    justify-content: center;
-    display: flex;
-    gap: 20px;
-}
-
-.big-button {
-    padding: 60px 30px;
-    font-size: 30px;
-    background: #1950a4cb;
-    color: white;
-    border: none;
-    cursor: pointer;
-    border-radius: 12px;
-    margin-top: 50px;
-    transition: background 0.3s, transform 0.3s;
-}
-
-.big-button:hover {
-    background: #1e6db0;
-    transform: translateY(-5px);
+    background: #ced8e7;
+    padding-top: 80px;
 }
 
 .students-table {
     width: 90%;
-    max-width: 800px; /* Set a maximum width */
+    max-width: 800px;
     margin-top: 20px;
     background: white;
     padding: 20px;
@@ -165,7 +184,6 @@ table {
 thead {
     background: #141460;
     color: white;
-    text-align: left;
 }
 
 th, td {
@@ -186,69 +204,6 @@ td img {
     border: 2px solid #141460;
 }
 
-.profile {
-    display: flex;
-    align-items: center;
-    margin-top: 60px;
-    flex-direction: column; /* Stack profile picture and username vertically */
-}
-
-.profile-picture {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    margin-bottom: 10px; /* Add margin below the picture */
-    display: block; /* Ensure the profile picture is always displayed */
-}
-
-.username {
-    color: white;
-    font-size: 18px;
-    text-align: center; /* Center the username text */
-}
-
-/* Hide username when sidebar is closed */
-.sidebar:not(.open) .username {
-    display: none;
-}
-
-.logout-button {
-    position: absolute;
-    bottom: 70px; 
-    left: 20px;
-    display: flex;
-    align-items: center;
-    width: calc(100% - 40px);
-    padding: 10px;
-    background: #1950a4cb;
-    color: white;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-    font-size: 15px;
-    white-space: nowrap;
-    transition: width 0.3s, padding 0.3s, justify-content 0.3s, background 0.3s;
-}
-
-.logout-button:hover {
-    background: #1e6db0;
-}
-
-.logout-button i {
-    font-size: 20px;
-    margin-right: 10px;
-}
-
-/* Hide text when sidebar is closed */
-.sidebar:not(.open) .logout-button span {
-    display: none; /* Hide text */
-}
-
-.sidebar:not(.open) .logout-button {
-    justify-content: center;
-}
-
-/* Enhanced search bar */
 .form-group {
     display: flex;
     justify-content: center;
