@@ -1,7 +1,7 @@
 <?php
 session_start();
-include '../db.php'; // Ensure correct database connection
-
+include '../db.php'; 
+include 'sidebar.php';
 if (!isset($_SESSION['username'])) {
     header("Location: login.php");
     exit();
@@ -23,30 +23,51 @@ $rooms_result = $conn->query($rooms_query);
     <title>Listes des Chambres</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .rooms-table {
+            width: 90%;
+            max-width: 800px;
+            margin-top: 20px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            overflow-x: auto;
+        }
+
+        .rooms-table h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #141460;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 16px;
+        }
+
+        thead {
+            background: #141460;
+            color: white;
+        }
+
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+            text-align: center;
+        }
+
+        tr:hover {
+            background: #f1f1f1;
+        }
+    </style>
 </head>
 <body>
     <header class="header">
         <h1>Listes des Chambres</h1>
     </header>
-    <div class="sidebar" id="sidebar">
-        <div class="profile">
-            <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt="Profile Picture" class="profile-picture">
-            <span class="username">User Name</span>
-        </div>
-        <hr>
-        <nav id="nav-bar">
-            <div class="sidebar-buttons">
-                <a href="#" class="sidebar-button"><i class="fa-solid fa-building"></i><span> Gestion des internats</span></a>
-                <a href="roomslist.php" class="sidebar-button"><i class="fa-solid fa-door-open"></i><span> Gestion des chambres</span></a>
-                <a href="#" class="sidebar-button"><i class="fa-solid fa-file"></i><span> Demandes d'internat</span></a>
-                <a href="#" class="sidebar-button"><i class="fa-solid fa-face-sad-tear"></i><span> Réclamations</span></a>
-            </div>
-        </nav>
-        <a href="logout.php" class="logout-button"><i class="fa-solid fa-sign-out-alt"></i><span> Logout</span></a>
-    </div>
-    
-    <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
-    
+
     <div class="main-content">
         <div class="rooms-table">
             <h2>Rooms List</h2>
