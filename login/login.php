@@ -1,5 +1,5 @@
 <?php
-include __DIR__ . '/connection.php';
+include '../connection.php';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = isset($_POST['username']) ? $_POST['username'] : '';
     $password = isset($_POST['password']) ? $_POST['password'] : '';
@@ -56,5 +56,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </div>
     <script type="text/javascript" src="login.js"></script>
+    <script>
+        function togglePasswordVisibility() {
+            const passwordField = document.getElementById('password');
+            const showHideButton = passwordField.nextElementSibling;
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                showHideButton.textContent = 'Hide';
+            } else {
+                passwordField.type = 'password';
+                showHideButton.textContent = 'Show';
+            }
+        }
+    </script>
 </body>
 </html>

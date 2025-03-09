@@ -125,7 +125,7 @@ CREATE TABLE `students` (
   `email` varchar(255) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
   `phone` varchar(20) DEFAULT NULL,
-  `photo` varchar(255) DEFAULT NULL,
+  `photo` varchar(255) DEFAULT NULL, -- Ensure this column exists
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `gender` enum('male','female') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;

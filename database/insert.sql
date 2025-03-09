@@ -12,6 +12,18 @@ INSERT INTO `students` (`cin`, `name`, `email`, `password`, `phone`, `photo`, `g
 ('I852963741', 'Karim Loukili', 'karim.loukili@example.com', MD5('password9'), '0690123456', '/uploads/photos/karim.jpg', 'male'),
 ('J147258369', 'Salma Raji', 'salma.raji@example.com', MD5('password10'), '0601234567', '/uploads/photos/salma.jpg', 'female');
 
+INSERT INTO `student_photos` (`student_cin`, `photo_path`) VALUES
+('A123456789', '/uploads/photos/ali.jpg'),
+('B987654321', '/uploads/photos/sara.jpg'),
+('C123987654', '/uploads/photos/mohamed.jpg'),
+('D789456123', '/uploads/photos/fatima.jpg'),
+('E654321987', '/uploads/photos/youssef.jpg'),
+('F321654987', '/uploads/photos/amal.jpg'),
+('G789123456', '/uploads/photos/omar.jpg'),
+('H456789123', '/uploads/photos/nadia.jpg'),
+('I852963741', '/uploads/photos/karim.jpg'),
+('J147258369', '/uploads/photos/salma.jpg');
+
 -------- admin_users--------
 
 INSERT INTO `admin_users` (`username`, `email`, `password`) VALUES

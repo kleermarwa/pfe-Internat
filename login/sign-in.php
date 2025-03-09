@@ -1,27 +1,56 @@
 <?php
-include __DIR__ . '/connection.php';
+include '../connection.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $cin = isset($_POST['cin']) ? $_POST['cin'] : '';
     $name = isset($_POST['name']) ? $_POST['name'] : '';
     $email = isset($_POST['email']) ? $_POST['email'] : '';
     $password = isset($_POST['password']) ? $_POST['password'] : '';
-    $gender = isset($_POST['gender']) ? $_POST['gender'] : '';
+    $phone = isset($_POST['phone']) ? $_POST['phone'] : '';
 
-    if (empty($cin) || empty($name) || empty($email) || empty($password) || empty($gender)) {
+    if (empty($cin) || empty($name) || empty($email) || empty($password) || empty($gender) || empty($phone)) {
         $error = "All fields are required.";
     } else {
         $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
-        $stmt = $conn->prepare("INSERT INTO students (cin, name, email, password, gender) VALUES (?, ?, ?, ?, ?)");
-        $stmt->bind_param("sssss", $cin, $name, $email, $hashedPassword, $gender);
+        $target_dir = "uploads/photos/";
+        $target_file = $target_dir . basename($_FILES["photo"]["name"]);
+        $uploadOk = 1;
+        $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
 
-        if ($stmt->execute()) {
-            $success = "Registration successful. You can now <a href='login.php'>login</a>.";
+        // Check if image file is a actual image or fake image
+        $check = getimagesize($_FILES["photo"]["tmp_name"]);
+        if ($check !== false) {
+            $uploadOk = 1;
         } else {
-            $error = "Error: " . $stmt->error;
+            $error = "File is not an image.";
+            $uploadOk = 0;
         }
 
-        $stmt->close();
+        // Allow certain file formats
+        if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
+            $error = "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+            $uploadOk = 0;
+        }
+
+        // Check if $uploadOk is set to 0 by an error
+        if ($uploadOk == 0) {
+            $error = "Sorry, your file was not uploaded.";
+        // if everything is ok, try to upload file
+        } else {
+            if (move_uploaded_file($_FILES["photo"]["tmp_name"], $target_file)) {
+                // Insert the new user into the database with the photo path
+                $stmt = $conn->prepare("INSERT INTO students (cin, name, email, password, gender, phone, photo) VALUES (?, ?, ?, ?, ?, ?, ?)");
+                $stmt->bind_param("sssssss", $cin, $name, $email, $hashedPassword, $gender, $phone, $target_file);
+
+                if ($stmt->execute()) {
+                    $success = "Registration successful. You can now <a href='login.php'>login</a>.";
+                } else {
+                    $error = "Error: " . $stmt->error;
+                }
+            } else {
+                $error = "Sorry, there was an error uploading your file.";
+            }
+        }
     }
 }
 ?>
@@ -50,6 +79,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     max-width: 100%; /* Prevents overflow on smaller screens */
     text-align: center;
 }
+.password {
+    grid-column: span 2; /* Make the password div span both columns */
+}
+.show-hide {
+    cursor: pointer;
+    margin-left: 10px;
+    color: #007bff;
+}
 </style>    
 
 <body>
@@ -58,7 +95,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <img src="logo (2).png" alt="logo">
         </div>
         <h2>Sign Up</h2>
-        <form method="post" action="">
+        <form method="post" action="" enctype="multipart/form-data">
             <div class="form-grid">
                 <div class="cin">
                     <label for="cin">CIN</label>
@@ -81,24 +118,47 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <input type="email" id="email" name="email" placeholder="Enter Email" required>
                     </div>
                 </div>
+                <div class="phone">
+                    <label for="phone">Phone Number</label>
+                    <div class="input-container">
+                        <ion-icon name="call-outline"></ion-icon>
+                        <input type="text" id="phone" name="phone" placeholder="Enter Phone Number" required>
+                    </div>
+                </div>
                 <div class="password">
                     <label for="password">Password</label>
                     <div class="input-container">
                         <ion-icon name="lock-closed-outline"></ion-icon>
                         <input type="password" id="password" name="password" placeholder="Enter Password" required>
+                        <span class="show-hide" onclick="togglePasswordVisibility()">Show</span>
                     </div>
                 </div>
+                
             </div>
 
             <?php if (isset($error)) { echo "<p class='error'>$error</p>"; } ?>
             <?php if (isset($success)) { echo "<p class='success'>$success</p>"; } ?>
+
+            <button type="submit" class="login">Sign In</button>
         </form>
         <div class="footer">
             <span>Already have an account?</span>
             <a href="login.php">Login</a>
         </div>
-        <button type="submit" class="login">Sign In</button>
     </div>
     <script src="script.js"></script>
+    <script>
+        function togglePasswordVisibility() {
+            const passwordField = document.getElementById('password');
+            const showHideButton = passwordField.nextElementSibling;
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                showHideButton.textContent = 'Hide';
+            } else {
+                passwordField.type = 'password';
+                showHideButton.textContent = 'Show';
+            }
+        }
+    </script>
 </body>
 </html>
