@@ -1,4 +1,5 @@
 <?php
+include __DIR__ . '/connection.php';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = isset($_POST['username']) ? $_POST['username'] : '';
     $password = isset($_POST['password']) ? $_POST['password'] : '';
@@ -50,7 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <button type="submit" class="login">Login</button>
         </form>
         <div class="footer">
-            <span><a href="sign-in.html">Sign up</a></span>
+            <span><a href="sign-in.php">Sign up</a></span>
             <span>Forgot Password?</span>
         </div>
     </div>

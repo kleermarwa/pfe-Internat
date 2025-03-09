@@ -11,7 +11,7 @@ $dorms_result = $conn->query($dorms_query);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bâtiments des Dortoirs</title>
+    <title>Gestion des batiments</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
@@ -30,7 +30,7 @@ $dorms_result = $conn->query($dorms_query);
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             padding: 20px;
-            width: 360px; /* Increased width */
+            width: 160px; /* Increased width */
             cursor: pointer;
             margin-left: 20px;
             transition: transform 0.3s;
@@ -45,41 +45,70 @@ $dorms_result = $conn->query($dorms_query);
             color: #141460;
         }
 
-        .rooms {
+        .modal {
             display: none;
-            margin-top: 10px;
-        }
-
-        .rooms.show {
-            display: block;
-        }
-
-        .rooms p {
-            margin: 5px 0;
-            padding: 10px;
-            background: #f0f2f5;
-            border-radius: 5px;
-        }
-
-        .form-group {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
-
-        .form-control {
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
             width: 100%;
-            max-width: 400px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 16px;
-            transition: border-color 0.3s;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0,0,0);
+            background-color: rgba(0,0,0,0.4);
+            padding-top: 60px;
         }
 
-        .form-control:focus {
-            border-color: #1950a4cb;
-            outline: none;
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+            width: 20%; /* Adjusted width */
+        }
+
+        th {
+            background-color: #1e1e6d; /* Changed color */
+            color: #f9f9f9;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        table, th, td {
+            border: 2px solid #141460;
         }
     </style>
 </head>
@@ -91,7 +120,7 @@ $dorms_result = $conn->query($dorms_query);
         <div class="form-group">
         <form method="GET" action="" class="mb-3">
                 <div class="form-group">
-                    <input type="text" class="form-control" name="search" placeholder="Search by CIN or Name" 
+                    <input type="text" class="form-control" name="search" placeholder="Search by dorm building name" 
                            value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>">
                     <button type="submit" class="search-btn">Search</button>
                 </div>
@@ -99,9 +128,13 @@ $dorms_result = $conn->query($dorms_query);
         </div>
         <div class="dorms-list" id="dormsList">
             <?php while ($dorm = $dorms_result->fetch_assoc()): ?>
-                <div class="dorm" onclick="toggleRooms('dorm<?= $dorm['id'] ?>')">
+                <div class="dorm" onclick="showModal('dorm<?= $dorm['id'] ?>')">
                     <h3><?= htmlspecialchars($dorm['name']) ?></h3>
-                    <div class="rooms" id="dorm<?= $dorm['id'] ?>">
+                </div>
+                <div id="dorm<?= $dorm['id'] ?>" class="modal">
+                    <div class="modal-content">
+                        <span class="close" onclick="closeModal('dorm<?= $dorm['id'] ?>')">&times;</span>
+                        <h3><?= htmlspecialchars($dorm['name']) ?></h3>
                         <table>
                             <thead>
                                 <tr>
@@ -136,8 +169,12 @@ $dorms_result = $conn->query($dorms_query);
     </div>
     
     <script>
-        function toggleRooms(id) {
-            document.getElementById(id).classList.toggle("show");
+        function showModal(id) {
+            document.getElementById(id).style.display = "block";
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).style.display = "none";
         }
 
         function toggleSidebar() {

@@ -82,22 +82,16 @@ CREATE TABLE `rooms` (
   `dorm_id` int(11) NOT NULL,
   `floor` int(11) NOT NULL,
   `capacity` int(11) DEFAULT 4,
-  `occupied_slots` int(11) DEFAULT 0
+  `occupied_slots` int(11) DEFAULT 0,
+  PRIMARY KEY (`room_number`, `dorm_id`),
+  KEY `dorm_id` (`dorm_id`),
+  CONSTRAINT `rooms_ibfk_1` FOREIGN KEY (`dorm_id`) REFERENCES `dorms` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `rooms`
 --
 
-INSERT INTO `rooms` (`room_number`, `dorm_id`, `floor`, `capacity`, `occupied_slots`) VALUES
-(101, 1, 1, 4, 0),
-(102, 1, 1, 4, 3),
-(103, 1, 1, 4, 4),
-(201, 1, 2, 4, 0),
-(301, 2, 3, 4, 2),
-(401, 2, 4, 4, 0),
-(501, 3, 5, 4, 1),
-(502, 3, 5, 4, 4);
 
 -- --------------------------------------------------------
 
@@ -136,6 +130,10 @@ CREATE TABLE `students` (
   `gender` enum('male','female') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+
+ALTER TABLE students ADD COLUMN reset_token VARCHAR(255) NULL;
+
+
 --
 -- Dumping data for table `students`
 --
@@ -143,9 +141,29 @@ CREATE TABLE `students` (
 INSERT INTO `students` (`cin`, `name`, `email`, `password`, `phone`, `photo`, `created_at`, `gender`) VALUES
 ('L694082', 'HADAD Douaa', 'douaahadad10@gmail.com', '$2y$10$2iNeKD9nA2VJFGUw2IQ5aO24DMHxl3TyeRcHJLjcWsEDnIgmllQOm', '0699105629', NULL, '2025-02-27 17:43:54', 'male');
 
+-- --------------------------------------------------------
+
 --
--- Indexes for dumped tables
+-- Table structure for table `admin_users`
 --
+
+CREATE TABLE `admin_users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `email` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+CREATE TABLE student_photos (
+    student_cin VARCHAR(10) PRIMARY KEY,  -- Primary Key (Same as students.cin)
+    photo_path VARCHAR(255) NOT NULL,
+    uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (student_cin) REFERENCES students(cin) ON DELETE CASCADE
+);
 
 --
 -- Indexes for table `dorms`
@@ -171,7 +189,7 @@ ALTER TABLE `payments`
 -- Indexes for table `rooms`
 --
 ALTER TABLE `rooms`
-  ADD PRIMARY KEY (`room_number`,`dorm_id`),
+  ADD PRIMARY KEY (`room_number`, `dorm_id`),
   ADD KEY `dorm_id` (`dorm_id`);
 
 --

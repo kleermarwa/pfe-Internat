@@ -24,20 +24,33 @@ body {
 
 h2 {
     margin-bottom: 20px;
+    color: blue;
 }
 
-select, button {
+label {
+    display: block;
+    margin-bottom: 5px;
+    text-align: left;
+    color: #555;
+}
+
+input[type="password"],
+input[type="email"],
+select,
+button {
     width: 100%;
     padding: 10px;
     margin: 10px 0;
     border: 1px solid #ddd;
     border-radius: 5px;
+    font-size: 16px;
 }
 
 button {
-    background: #007BFF;
+    background: green;
     color: white;
     cursor: pointer;
+    transition: background 0.3s ease;
 }
 
 button:hover {
@@ -56,5 +69,10 @@ button:hover {
 
 .full {
     background: #ddd;
+    color: red;
+}
+
+p {
+    margin: 10px 0;
     color: red;
 }

@@ -15,6 +15,6 @@
             <a href="#" class="sidebar-button"><i class="fa-solid fa-exclamation-circle"></i><span> Réclamations</span></a>
          </div>
     </nav>
-    <a href="logout.php" class="logout-button"><i class="fa-solid fa-sign-out-alt"></i><span> Logout</span></a>
+    <a href="../login.php" class="logout-button"><i class="fa-solid fa-sign-out-alt"></i><span> Logout</span></a>
 </div>
 <button class="toggle-btn" onclick="toggleSidebar()">☰</button>

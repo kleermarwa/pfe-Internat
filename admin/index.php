@@ -2,11 +2,11 @@
 session_start();
 include '../db.php'; 
 
-if (!isset($_SESSION['username'])) {
-    header("Location: login.php");
+/*if (!isset($_SESSION['username']) || $_SESSION['user_type'] !== 'admin') {
+    header("Location: ../login.php");
     exit();
 }
-
+*/
 // Fetch search query if available
 $search_query = isset($_GET['search']) ? trim($_GET['search']) : "";
 
@@ -66,14 +66,11 @@ $total_students = $stmt->get_result();
             text-align: center;
         }
 
-        tr:hover {
-            background: #f1f1f1;
-        }
 
         td img {
             width: 50px;
             height: 50px;
-            border-radius: 50%;
+            border-radius: 10px;
             object-fit: cover;
             border: 2px solid #141460;
         }
