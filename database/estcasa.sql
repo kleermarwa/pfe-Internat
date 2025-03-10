@@ -78,12 +78,13 @@ CREATE TABLE `payments` (
 --
 
 CREATE TABLE `rooms` (
+  `room_id` varchar(20) NOT NULL,
   `room_number` int(11) NOT NULL,
   `dorm_id` int(11) NOT NULL,
   `floor` int(11) NOT NULL,
   `capacity` int(11) DEFAULT 4,
   `occupied_slots` int(11) DEFAULT 0,
-  PRIMARY KEY (`room_number`, `dorm_id`),
+  PRIMARY KEY (`room_id`),
   KEY `dorm_id` (`dorm_id`),
   CONSTRAINT `rooms_ibfk_1` FOREIGN KEY (`dorm_id`) REFERENCES `dorms` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -91,7 +92,6 @@ CREATE TABLE `rooms` (
 --
 -- Dumping data for table `rooms`
 --
-
 
 -- --------------------------------------------------------
 
@@ -127,19 +127,21 @@ CREATE TABLE `students` (
   `phone` varchar(20) DEFAULT NULL,
   `photo` varchar(255) DEFAULT NULL, -- Ensure this column exists
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `gender` enum('male','female') NOT NULL
+  `gender` enum('male','female') NOT NULL,
+  `room_id` int(11) DEFAULT NULL, -- Add this line
+  PRIMARY KEY (`cin`),
+  UNIQUE KEY `email` (`email`),
+  FOREIGN KEY (`room_id`) REFERENCES `rooms` (`room_id`) ON DELETE SET NULL -- Add this line
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-
 ALTER TABLE students ADD COLUMN reset_token VARCHAR(255) NULL;
-
 
 --
 -- Dumping data for table `students`
 --
 
-INSERT INTO `students` (`cin`, `name`, `email`, `password`, `phone`, `photo`, `created_at`, `gender`) VALUES
-('L694082', 'HADAD Douaa', 'douaahadad10@gmail.com', '$2y$10$2iNeKD9nA2VJFGUw2IQ5aO24DMHxl3TyeRcHJLjcWsEDnIgmllQOm', '0699105629', NULL, '2025-02-27 17:43:54', 'male');
+INSERT INTO `students` (`cin`, `name`, `email`, `password`, `phone`, `photo`, `created_at`, `gender`, `room_id`) VALUES
+('L694082', 'HADAD Douaa', 'douaahadad10@gmail.com', '$2y$10$2iNeKD9nA2VJFGUw2IQ5aO24DMHxl3TyeRcHJLjcWsEDnIgmllQOm', '0699105629', NULL, '2025-02-27 17:43:54', 'male', 1);
 
 -- --------------------------------------------------------
 
@@ -189,7 +191,7 @@ ALTER TABLE `payments`
 -- Indexes for table `rooms`
 --
 ALTER TABLE `rooms`
-  ADD PRIMARY KEY (`room_number`, `dorm_id`),
+  ADD PRIMARY KEY (`room_id`),
   ADD KEY `dorm_id` (`dorm_id`);
 
 --
@@ -227,6 +229,12 @@ ALTER TABLE `meal_reservations`
 --
 ALTER TABLE `payments`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `rooms`
+--
+ALTER TABLE `rooms`
+  MODIFY `room_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `room_requests`

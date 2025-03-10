@@ -46,6 +46,7 @@ $dorms_result = $conn->query($dorms_query);
         }
 
         .modal {
+            border-radius: 10px;
             display: none;
             position: fixed;
             z-index: 1;
@@ -60,11 +61,12 @@ $dorms_result = $conn->query($dorms_query);
         }
 
         .modal-content {
+            border-radius: 10px;
             background-color: #fefefe;
             margin: 5% auto;
             padding: 20px;
             border: 1px solid #888;
-            width: 80%;
+            width: 50%; /* Reduced width */
         }
 
         .close {
@@ -195,5 +197,7 @@ $dorms_result = $conn->query($dorms_query);
             });
         }
     </script>
+    
+    <script src="script.js"></script>
 </body>
 </html>

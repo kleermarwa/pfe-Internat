@@ -154,7 +154,7 @@ body {
     align-items: center;
     width: 100%;
     background: #ced8e7;
-    padding-top: 80px;
+    padding-top: 80px;/* Add padding to account for the sidebar */
 }
 
 .form-group {

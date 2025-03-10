@@ -1,19 +1,18 @@
+
 <?php
 session_start();
 include '../db.php'; 
 
-/*if (!isset($_SESSION['username']) || $_SESSION['user_type'] !== 'admin') {
+if (!isset($_SESSION['username'])) {
     header("Location: ../login.php");
     exit();
 }
-*/
+
 // Fetch search query if available
 $search_query = isset($_GET['search']) ? trim($_GET['search']) : "";
 
 // Prepare SQL query for student search
-$total_students_query = "SELECT students.*, student_photos.photo_path FROM students
-                         LEFT JOIN student_photos ON students.cin = student_photos.student_cin" . 
-                         ($search_query ? " WHERE students.cin LIKE ? OR students.name LIKE ?" : "");
+$total_students_query = "SELECT * FROM students" . ($search_query ? " WHERE cin LIKE ? OR name LIKE ?" : "");
 $stmt = $conn->prepare($total_students_query);
 
 if ($search_query) {
@@ -68,72 +67,14 @@ $total_students = $stmt->get_result();
             text-align: center;
         }
 
+ 
+
         td img {
             width: 50px;
             height: 50px;
             border-radius: 10px;
             object-fit: cover;
             border: 2px solid #141460;
-        }
-
-        tr.clickable-row {
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        tr.clickable-row:hover {
-            background-color:rgb(165, 165, 185);
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgb(0,0,0);
-            background-color: rgba(0,0,0,0.4);
-            padding-top: 60px;
-        }
-
-        .modal-content {
-            background-color: #fefefe;
-            margin: 5% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-            max-width: 500px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            position: relative;
-        }
-
-        .modal-content img {
-            width: 150px;
-            height: 150px;
-            border-radius: 10px;
-            object-fit: cover;
-            margin-left: 20px;
-        }
-
-        .close {
-            color: #aaa;
-            position: absolute;
-            top: 10px;
-            right: 20px;
-            font-size: 28px;
-            font-weight: bold;
-        }
-
-        .close:hover,
-        .close:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
         }
     </style>
 </head>
@@ -170,13 +111,13 @@ $total_students = $stmt->get_result();
                 </thead>
                 <tbody>
                     <?php while($student = $total_students->fetch_assoc()): ?>
-                    <tr class="clickable-row" data-student='<?php echo json_encode($student); ?>'>
+                    <tr>
                         <td><?php echo htmlspecialchars($student['cin']); ?></td>
                         <td><?php echo htmlspecialchars($student['name']); ?></td>
                         <td><?php echo htmlspecialchars($student['email']); ?></td>
                         <td><?php echo htmlspecialchars($student['phone']); ?></td>
                         <td><?php echo htmlspecialchars($student['gender']); ?></td>
-                        <td><img src="<?php echo htmlspecialchars($student['photo_path']); ?>" alt="Student Photo" width="50"></td>
+                        <td><img src="<?php echo htmlspecialchars($student['photo']); ?>" alt="Student Photo" width="50"></td>
                     </tr>
                     <?php endwhile; ?>
                 </tbody>
@@ -184,46 +125,6 @@ $total_students = $stmt->get_result();
         </div>
     </div>
 
-    <!-- The Modal -->
-    <div id="studentModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <div id="studentInfo"></div>
-            <img id="studentPhoto" src="" alt="Student Photo">
-        </div>
-    </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var modal = document.getElementById("studentModal");
-            var span = document.getElementsByClassName("close")[0];
-
-            document.querySelectorAll('.clickable-row').forEach(function(row) {
-                row.addEventListener('click', function() {
-                    var student = JSON.parse(this.getAttribute('data-student'));
-                    var studentInfo = `
-                        <strong>CIN:</strong> ${student.cin}<br>
-                        <strong>Name:</strong> ${student.name}<br>
-                        <strong>Email:</strong> ${student.email}<br>
-                        <strong>Phone:</strong> ${student.phone}<br>
-                        <strong>Gender:</strong> ${student.gender}<br>
-                    `;
-                    document.getElementById('studentInfo').innerHTML = studentInfo;
-                    document.getElementById('studentPhoto').src = student.photo_path;
-                    modal.style.display = "block";
-                });
-            });
-
-            span.onclick = function() {
-                modal.style.display = "none";
-            }
-
-            window.onclick = function(event) {
-                if (event.target == modal) {
-                    modal.style.display = "none";
-                }
-            }
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
